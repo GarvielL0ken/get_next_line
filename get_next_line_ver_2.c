@@ -48,12 +48,24 @@ int	get_next_line(const int fd, char **line)
 		if (buff[0] == '\0')
 			read(fd, buff, BUFF_SIZE);
 		j = 0;
-		while (buff[j] != '\0')
+		printf("\n");
+		if (buff[0] == '\n')
 		{
-			if (buff[j] != '\n')
-				printf("buff[%d] = %c\n", j, buff[j]);
-			else
+			j = 0;
+			while (j < BUFF_SIZE - 1)
+			{
+				buff[j] == buff[j + 1];
+				j++;
+			}
+		}
+		while (j < BUFF_SIZE)
+		{
+			if (buff[j] == '\n')
 				printf("buff[%d] = \\n\n", j);
+			else if (buff[j] == '\0')
+				printf("buff[%d] = \\0\n", j);
+			else
+				printf("buff[%d] = %c\n", j, buff[j]);
 			j++;
 		}
 		j = 0;
@@ -65,7 +77,7 @@ int	get_next_line(const int fd, char **line)
 			j++;
 		}
 		pos = ft_find_index(buff, '\n');
-		if (pos == -1 || buff[j] == '\0')
+		if (pos == -1)
 			buff[0] = '\0';
 		else
 		{

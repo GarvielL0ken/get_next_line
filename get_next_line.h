@@ -12,7 +12,9 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 20
+# define BUFF_SIZE 24
+# define CR 13
+# define LF 10
 
 int	get_next_line(const int fd, char **line);
 
