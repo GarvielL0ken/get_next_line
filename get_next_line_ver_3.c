@@ -6,7 +6,7 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 12:03:55 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/06 12:59:56 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/10 15:02:47 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	ft_print_buff_char(int i, char c, const char *buff_name)
 	printf("%s[%d] = ", buff_name, i);
 	if (c == LF)
 		printf("LF\n");
-	else if (c == CR)
-		printf("CR\n");
 	else if (c == '\0')
 		printf("\\0\n");
 	else
@@ -51,7 +49,6 @@ void	ft_print_buff(char *buff)
 		ft_print_buff_char(i, buff[i], "buff");
 		i++;
 	}
-
 }
 
 int	get_next_line(const int fd, char **line)
@@ -62,7 +59,6 @@ int	get_next_line(const int fd, char **line)
 	int			read_ret;
 	static char	*buff;
 
-	ret = -1;
 	if (!buff)
 	{
 		buff = (char *)malloc(BUFF_SIZE + 1);
@@ -78,27 +74,14 @@ int	get_next_line(const int fd, char **line)
 			read_ret = read(fd, buff, BUFF_SIZE);
 		buff[read_ret] = '\0';
 		j = 0;
-		if (buff[0] == LF || buff[0] == CR)
-		{
-			if (buff[0] == LF)
-				j = 0;
-			else
-				j = 1;
-			while (j < BUFF_SIZE - 1)
-			{
-				buff[j] == buff[j + 1];
-				j++;
-			}
-		}
 		j = 0;
-		while (buff[j] != LF && j < BUFF_SIZE && buff[j] != '\0' && buff[j] != CR)
+		while (buff[j] != LF && j < BUFF_SIZE && buff[j] != '\0')
 		{
 			*(*line + i) = buff[j];
+			ft_print_buff_char(i, *(*line + i), "line");
 			i++;
 			j++;
 		}
-		if (buff[j] == CR)
-			j++;
 		pos = ft_find_index(buff, '\n');
 		if (ft_find_index(buff, '\0') != BUFF_SIZE && pos == -1)
 			j = BUFF_SIZE;
@@ -116,7 +99,7 @@ int	get_next_line(const int fd, char **line)
 			buff[j] = '\0';
 		}
 	}
-	if (read_ret == BUFF_SIZE && BUFF_SIZE > 0)
+	if (read_ret == BUFF_SIZE && BUFF_SIZE > 0 && pos != -1)
 		read_ret = 1;
 	else if (read_ret < BUFF_SIZE && BUFF_SIZE > 0)
 		read_ret = 0;

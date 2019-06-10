@@ -1,4 +1,4 @@
 all:
-	gcc main.c
+	gcc -Wall -Werror -Wextra main.c
 	clear
-	./a.exe
+	./a.*
