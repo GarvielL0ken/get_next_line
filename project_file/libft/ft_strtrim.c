@@ -6,7 +6,7 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:42:10 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/05/30 13:53:13 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/13 11:32:53 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s)
 	while (s[start] == ' ' || s[start] == '\t' || s[start] == '\n')
 		start++;
 	if (s[start] == '\0')
-		return ("");
+		return (ft_strdup(""));
 	while (s[end] == ' ' || s[end] == '\t' || s[end] == '\n')
 		end--;
 	if (!(ptr = malloc(end - start + 2)))

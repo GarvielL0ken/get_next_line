@@ -6,11 +6,11 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 16:55:03 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/10 17:09:07 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/10 16:57:35 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 int	ft_find_index(char *str, char to_find)
 {

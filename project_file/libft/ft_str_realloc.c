@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_str_realloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/23 09:53:34 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/13 11:41:28 by jsarkis          ###   ########.fr       */
+/*   Created: 2019/06/13 10:33:38 by jsarkis           #+#    #+#             */
+/*   Updated: 2019/06/13 11:02:01 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_str_realloc(char **str, size_t size)
 {
 	size_t	i;
-	int		diff;
+	char	*new;
 
+	new = (char *)malloc(size);
 	i = 0;
-	while (i < n)
+	while (*(*str + i) != '\0')
 	{
-		diff = (unsigned char)s1[i] - (unsigned char)s2[i];
-		if (diff != 0 || s1[i] == '\0')
-		{
-			if (diff < 0)
-				return (-1);
-			else if (diff > 0)
-				return (1);
-			else
-				return (0);
-		}
+		new[i] = *(*str + i);
 		i++;
 	}
-	return (0);
+	while (i < size)
+	{
+		new[i] = '\0';
+		i++;
+	}
+	free(*str);
+	free(str);
+	return (new);
 }

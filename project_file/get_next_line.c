@@ -1,57 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_ver_4.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:01:17 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/10 18:26:57 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/13 16:57:51 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include "libft/ft_find_index.c"
+#include "libft/libft.h"
 
-char	*init(char *buff, int *i, int *j, int *read_ret)
+char	*init(int *i, int *j, char *buff, char **line)
 {
 	*i = 0;
 	*j = BUFF_SIZE;
-	*read_ret = BUFF_SIZE;
 	if (!buff)
-	{
-		buff = (char *)malloc(BUFF_SIZE + 1);
-		buff[BUFF_SIZE] = '\0';
-		buff[0] = '\0';
-	}
+		buff = ft_strnew(BUFF_SIZE + 1);
+	*line = ft_strnew(1000 * 1000);
 	return (buff);
 }
 
-char	*shift_bytes(char *buff, int *j, int pos)
+char	*shift_bytes(char *buff, int *j, int *pos)
 {
-	if (pos == -1)
+	*pos = ft_find_index(buff, '\n');
+	if (ft_find_index(buff, '\0') != BUFF_SIZE && *pos == -1)
+		*j = BUFF_SIZE;
+	if (*pos == -1)
 		buff[0] = '\0';
 	else
 	{
 		*j = 0;
-		pos++;
-		while (buff[pos + *j] != '\0')
+		*pos = *pos + 1;
+		while (buff[*pos + *j] != '\0')
 		{
-			buff[*j] = buff[pos + *j];
-			j++;
+			buff[*j] = buff[*pos + *j];
+			*j = *j + 1;
 		}
 		buff[*j] = '\0';
 	}
 	return (buff);
 }
 
-int		calc_return(int read_ret, int pos)
+int		calc_return(int read_ret, int i)
 {
-	if (read_ret == BUFF_SIZE && BUFF_SIZE > 0 && pos != -1)
+	if ((read_ret > 0 || i > 0) && BUFF_SIZE > 0)
 		return (1);
-	else if (read_ret < BUFF_SIZE && read_ret >= 0  && BUFF_SIZE > 0)
+	else if (read_ret == 0 && BUFF_SIZE > 0)
 		return (0);
 	else
 		return (-1);
@@ -65,14 +64,10 @@ int		get_next_line(const int fd, char **line)
 	int			read_ret;
 	static char	*buff;
 
-	buff = init(buff, &i, &j, &read_ret);
-	if (!line || fd < 0)
+	read_ret = BUFF_SIZE;
+	if (!line || fd < 0 || read(fd, NULL, 0) < 0)
 		return (-1);
-	*line = (char *)malloc(256 + 1);
-	i = 0;
-	while (i++ < 256)
-		*(*line + i) = '\0';
-	i = 0;
+	buff = init(&i, &j, buff, line);
 	while (j == BUFF_SIZE && buff[j] != LF && read_ret == BUFF_SIZE)
 	{
 		if (buff[0] == '\0')
@@ -85,10 +80,7 @@ int		get_next_line(const int fd, char **line)
 			i++;
 			j++;
 		}
-		pos = ft_find_index(buff, '\n');
-		if (ft_find_index(buff, '\0') != BUFF_SIZE && pos == -1)
-			j = BUFF_SIZE;
-		buff = shift_bytes(buff, &j, pos);
+		buff = shift_bytes(buff, &j, &pos);
 	}
-	return (calc_return(read_ret, pos));
+	return (calc_return(read_ret, i));
 }

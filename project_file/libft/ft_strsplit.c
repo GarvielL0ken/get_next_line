@@ -6,7 +6,7 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 14:32:49 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/05/30 13:40:13 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/13 11:22:09 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	**ft_strsplit(char const *s, char c)
 	int		i;
 	int		j;
 
-	if (!s || !c)
+	if (!s)
 		return (NULL);
 	buff = (char **)malloc(sizeof(char *) * (ft_num_words(s, c) + 1));
-	if (!s || !buff)
+	if (!buff)
 		return (NULL);
 	i = -1;
 	j = 0;

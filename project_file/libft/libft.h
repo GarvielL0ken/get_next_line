@@ -6,7 +6,7 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 11:10:42 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/10 16:58:07 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/13 12:10:41 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 
-void				ft_listiter(t_list *lst, void (*f)(t_list *elem));
+void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
@@ -88,6 +88,8 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr(char const *str);
 
 void				ft_putstr_fd(char const *str, int fd);
+
+char				*ft_str_realloc(char **str, size_t size);
 
 char				*ft_strcat(char *s1, const char *s2);
 

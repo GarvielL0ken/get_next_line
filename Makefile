@@ -1,4 +1,2 @@
 all:
-	gcc -Wall -Werror -Wextra main.c
-	clear
-	./a.*
+	gcc main.c -L./project_file/libft -lft
