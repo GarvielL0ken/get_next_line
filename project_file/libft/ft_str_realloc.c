@@ -6,15 +6,15 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 10:33:38 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/13 11:02:01 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/18 19:04:09 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	*ft_str_realloc(char **str, size_t size)
+char	*ft_str_realloc(char **str, int size)
 {
-	size_t	i;
+	int		i;
 	char	*new;
 
 	new = (char *)malloc(size);
@@ -24,12 +24,11 @@ char	*ft_str_realloc(char **str, size_t size)
 		new[i] = *(*str + i);
 		i++;
 	}
-	while (i < size)
+	while (i <= size)
 	{
 		new[i] = '\0';
 		i++;
 	}
 	free(*str);
-	free(str);
 	return (new);
 }

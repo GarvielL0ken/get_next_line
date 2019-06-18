@@ -6,7 +6,7 @@
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:01:17 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/06/13 16:57:51 by jsarkis          ###   ########.fr       */
+/*   Updated: 2019/06/18 19:24:25 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,22 @@ char	*init(int *i, int *j, char *buff, char **line)
 	return (buff);
 }
 
-char	*shift_bytes(char *buff, int *j, int *pos)
+char	*shift_bytes(char *buff, int *j)
 {
-	*pos = ft_find_index(buff, '\n');
-	if (ft_find_index(buff, '\0') != BUFF_SIZE && *pos == -1)
+	int pos;
+
+	pos = ft_find_index(buff, '\n');
+	if (ft_find_index(buff, '\0') != BUFF_SIZE && pos == -1)
 		*j = BUFF_SIZE;
-	if (*pos == -1)
+	if (pos == -1)
 		buff[0] = '\0';
 	else
 	{
 		*j = 0;
-		*pos = *pos + 1;
-		while (buff[*pos + *j] != '\0')
+		pos = pos + 1;
+		while (buff[pos + *j] != '\0')
 		{
-			buff[*j] = buff[*pos + *j];
+			buff[*j] = buff[pos + *j];
 			*j = *j + 1;
 		}
 		buff[*j] = '\0';
@@ -60,7 +62,6 @@ int		get_next_line(const int fd, char **line)
 {
 	int			i;
 	int			j;
-	int			pos;
 	int			read_ret;
 	static char	*buff;
 
@@ -80,7 +81,7 @@ int		get_next_line(const int fd, char **line)
 			i++;
 			j++;
 		}
-		buff = shift_bytes(buff, &j, &pos);
+		buff = shift_bytes(buff, &j);
 	}
 	return (calc_return(read_ret, i));
 }
