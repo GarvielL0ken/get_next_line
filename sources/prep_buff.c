@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   prep_buff.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/22 19:21:04 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/05/30 12:56:12 by jsarkis          ###   ########.fr       */
+/*   Created: 2019/07/09 09:49:25 by jsarkis           #+#    #+#             */
+/*   Updated: 2019/07/09 09:59:52 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/get_next_line.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	prep_buff(char **buff)
 {
-	char	*buff_dest;
-	char	*buff_src;
-	size_t	i;
+	int pos;
 
-	buff_dest = (char *)dest;
-	buff_src = (char *)src;
-	i = -1;
-	if (!buff_dest && !buff_src)
-		return (0);
-	while (++i < n)
-		*(buff_dest + i) = *(buff_src + i);
-	return (dest);
+	pos = ft_find_index(*buff, '\n');
+	if (pos == -1)
+		*(*buff) = '\0';
+	else
+		*buff = ft_str_shift(*buff, pos + 1);
 }

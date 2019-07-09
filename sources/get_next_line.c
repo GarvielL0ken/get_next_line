@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsarkis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/26 12:05:48 by jsarkis           #+#    #+#             */
-/*   Updated: 2019/05/26 13:55:39 by jsarkis          ###   ########.fr       */
+/*   Created: 2019/07/03 19:00:54 by jsarkis           #+#    #+#             */
+/*   Updated: 2019/07/09 10:11:11 by jsarkis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/get_next_line.h"
 
-char	*ft_strstr(const char *haystack, const char *needle)
+int		get_next_line(const int fd, char **line)
 {
-	int i;
-	int j;
+	static char	*buff;
 
-	i = 0;
-	if (needle[0] == '\0')
-		return ((char *)haystack);
-	while (haystack[i] != '\0')
-	{
-		j = 0;
-		while (haystack[i + j] == needle[j])
-		{
-			if (needle[j + 1] == '\0')
-			{
-				return ((char *)haystack + i);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	if (!line || fd < 0 || read(fd, NULL, 0) < 0 || BUFF_SIZE < 1)
+		return (-1);
+	if (!buff)
+		buff = ft_strnew(BUFF_SIZE + 1);
+	return (gnl_main_loop(fd, line, &buff));
 }
